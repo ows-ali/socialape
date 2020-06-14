@@ -70,10 +70,8 @@ const isEmpty = (str) => {
 
 const isEmail = (email) => {
 
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (regex.test(email) === true)
-        return true
+    const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.match(regEx)) return true;
     else return false
 
 }
@@ -100,7 +98,7 @@ app.post('/signup',(req,res)=>{
     if (isEmpty(newUser.email)){
         errors.email = "Cannot be empty"
     }
-    else if (isEmail(newUser.email)==false){
+    else if (isEmail(newUser.email)===false){
         errors.email = "Please enter valid email address"
     }
 
@@ -110,7 +108,7 @@ app.post('/signup',(req,res)=>{
     {
         errors.password = "Cannot be empty"
     }
-    else if (newUser.password != newUser.confirmPassword) {
+    else if (newUser.password !== newUser.confirmPassword) {
         errors.confirmPassword = "Passwords must match"
 
     }
@@ -121,7 +119,7 @@ app.post('/signup',(req,res)=>{
     {
         errors.handle = "Cannot be empty"
     }
-    if (errors!={})
+    if (errors!=={})
     {
      return res.status(400).json(errors )   
     }
@@ -223,7 +221,7 @@ app.post('/login',(req,res)=>{
     })
     .catch(err=>{
         console.log(err,'in catch earlier')
-        if (err.code == 'auth/wrong-password')
+        if (err.code === 'auth/wrong-password')
         {
             // errors.password = 'password is wrong'
             return res.status(400).json({general: 'password is wrong' })
@@ -281,7 +279,7 @@ app.post('/scream', FBAuth, (req,res)=>{
     // {
     //     return res.status(400).json({error: "Method not allowed."})
     // }
-    if (req.body.body.trim()=='')
+    if (req.body.body.trim()==='')
     {
         return res.status(400).json({body: "Cannot be empty"})
     }
